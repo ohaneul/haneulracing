@@ -14,6 +14,12 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/ohaneul/haneulracing/refs/heads/main/logo.png?token=GHSAT0AAAAAACZZY7FW4472OYCKJMOILJGQZZDZAQQ">
 
 <style>
+:root {
+  --primary-color: #ff69b4; /* Pink */
+  --primary-lighter-color: #ffb6c1; /* Light pink */
+  --primary-darker-color: #ff1493; /* Deep pink */
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -22,7 +28,7 @@
 }
 
 body {
-  background-color: #181f2a;
+  background-color: #000000;
   color: white;
   overflow-x: hidden;
 }
@@ -32,149 +38,131 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(24, 31, 42, 0.95);
-  padding: 1rem 2rem;
+  background-color: rgba(0, 0, 0, 0.95);
+  padding: 1.2rem 2rem;
   z-index: 1000;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
-}
-
-.nav-bar.scrolled {
-  padding: 0.8rem 2rem;
-  background-color: rgba(24, 31, 42, 0.98);
-}
-
-.nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nav-logo {
-  color: #fca311;
-  font-size: 1.5rem;
-  text-decoration: none;
-  font-weight: bold;
-  position: relative;
-  padding: 0.5rem 1rem;
-  transition: all 0.3s ease;
-  background: linear-gradient(90deg, #fca311, #ff4e00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 15px rgba(252, 163, 17, 0.3);
-}
-
-.nav-logo::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, #fca311, #ff4e00);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-
-.nav-logo::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, #fca311, #ff4e00);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-.nav-logo:hover {
-  transform: scale(1.05);
-  animation: glowing 1.5s infinite;
-}
-
-.nav-logo:hover::before,
-.nav-logo:hover::after {
-  transform: scaleX(1);
-}
-
-@keyframes glowing {
-  0% { text-shadow: 0 0 5px rgba(252, 163, 17, 0.5); }
-  50% { text-shadow: 0 0 20px rgba(252, 163, 17, 0.8); }
-  100% { text-shadow: 0 0 5px rgba(252, 163, 17, 0.5); }
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 105, 180, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: 2.5rem;
   list-style: none;
-}
-
-.nav-links li {
-  position: relative;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links a {
   color: white;
   text-decoration: none;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding: 0.5rem 0;
   transition: all 0.3s ease;
-  display: inline-block;
+  text-transform: uppercase;
 }
 
-.nav-links a:not(.esports)::before {
+.nav-links a::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #fca311, transparent);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
+  background: linear-gradient(90deg, transparent, #ff69b4, transparent);
+  transition: width 0.3s ease, left 0.3s ease;
+  transform-origin: center;
 }
 
-.nav-links a:not(.esports):hover::before {
-  transform: scaleX(1);
-  transform-origin: left;
+.nav-links a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+.nav-links a:hover {
+  color: #ff69b4;
+  transform: translateY(-2px);
+}
+
+.nav-links .esports {
+  color: #ff69b4;
+  border: 1px solid rgba(255, 105, 180, 0.3);
+  border-radius: 25px;
+  padding: 0.7rem 1.4rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, rgba(255, 105, 180, 0.1), rgba(255, 105, 180, 0.05));
+  backdrop-filter: blur(4px);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.1);
+}
+
+.nav-links .esports:hover {
+  background: rgba(255, 105, 180, 0.15);
+  border-color: rgba(255, 105, 180, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.2);
+}
+
+.nav-links .esports::after {
+  display: none;
 }
 
 .nav-links a.active {
-  color: #fca311;
+  color: #ff69b4;
+}
+
+.nav-links a.active::after {
+  width: 100%;
+  left: 0;
+}
+
+.nav-bar.scrolled {
+  padding: 1rem 2rem;
+  background-color: rgba(0, 0, 0, 0.98);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end; /* Change from space-between to flex-end */
+  align-items: center;
+  gap: 2rem;
 }
 
 .nav-controls {
   display: flex;
   gap: 1rem;
-  margin-right: 2rem;
+  margin-right: auto; /* Add this to push controls to the left */
 }
 
 .theme-toggle, .language-toggle {
-  background: none;
-  border: none;
-  color: #fca311;
+  background: rgba(255, 105, 180, 0.1);
+  border: 1px solid rgba(255, 105, 180, 0.2);
+  color: #ff69b4;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  padding: 0.6rem;
+  border-radius: 8px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 1.1rem;
 }
 
 .theme-toggle:hover, .language-toggle:hover {
-  background: rgba(252, 163, 17, 0.1);
+  background: rgba(255, 105, 180, 0.1);
 }
 
 .theme-toggle i {
@@ -193,37 +181,6 @@ body {
   font-size: 0.9rem;
 }
 
-.nav-links .esports {
-  color: #fca311;
-  border: 2px solid #fca311;
-  padding: 0.5rem 1.5rem;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.nav-links .esports::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  background: #fca311;
-  transition: width 0.3s ease;
-  z-index: -1;
-}
-
-.nav-links .esports:hover::before {
-  width: 100%;
-}
-
-.nav-links .esports:hover {
-  color: #181f2a;
-}
-
 .hero {
   height: 100vh;
   width: 100%;
@@ -235,6 +192,7 @@ body {
   background-position: center;
   background-attachment: fixed;
   overflow: hidden;
+  transition: opacity 0.5s ease;
 }
 
 .hero::before {
@@ -244,7 +202,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, rgba(252, 163, 17, 0.3), transparent);
+  background: linear-gradient(45deg, rgba(255, 105, 180, 0.3), transparent);
   z-index: 1;
 }
 
@@ -266,15 +224,53 @@ body {
   letter-spacing: 4px;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
   animation: fadeInDown 1s ease-out;
+  background: linear-gradient(135deg, #fff, #ff69b4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-content h2 {
-  font-size: 2rem;
-  color: #fca311;
+  font-size: 2.5rem;
+  color: #ff69b4;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   margin-top: 1rem;
   animation: fadeInUp 1s ease-out 0.5s backwards;
+  text-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes textGlow {
+  0%, 100% { text-shadow: 0 0 15px rgba(255, 105, 180, 0.3); }
+  50% { text-shadow: 0 0 30px rgba(255, 105, 180, 0.6); }
+}
+
+.hero-content h1,
+.hero-content h2 {
+  animation: textGlow 3s infinite alternate;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(24, 31, 42, 0.95), transparent);
+}
+
+.hero-content:hover h1 {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+.hero-content:hover h2 {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
 }
 
 .scroll-indicator {
@@ -288,7 +284,7 @@ body {
 }
 
 .scroll-indicator i {
-  color: #fca311;
+  color: #ff69b4;
   font-size: 2rem;
 }
 
@@ -326,7 +322,6 @@ body {
   }
 }
 
-/* Light mode styles */
 body.light-mode {
   background-color: #ffffff;
   color: #181f2a;
@@ -349,24 +344,47 @@ body.light-mode .footer {
 }
 
 body.light-mode .profile-card {
-  background: rgba(252, 163, 17, 0.05);
+  background: rgba(255, 105, 180, 0.05);
 }
 
 .content-section {
   text-align: center;
-  padding: 6rem 2rem;
+  padding: 6rem 2rem; /* Increased padding to create better spacing */
   position: relative;
   z-index: 2;
   background: linear-gradient(rgba(24, 31, 42, 0.97), rgba(24, 31, 42, 0.95));
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .content-container {
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content-container.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.content-section:not(:last-child) {
+  margin-bottom: 2rem; /* Improve transitions between sections */
+}
+
+.content-section:hover {
+  transform: translateY(-5px);
+}
+
+.content-container {
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(255, 105, 180, 0.1);
+  border: 1px solid rgba(255, 105, 180, 0.1);
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
-  background: rgba(252, 163, 17, 0.03);
+  background: rgba(255, 105, 180, 0.03);
   border-radius: 15px;
-  box-shadow: 0 4px 30px rgba(252, 163, 17, 0.05);
+  box-shadow: 0 4px 30px rgba(255, 105, 180, 0.05);
   backdrop-filter: blur(5px);
   transition: transform 0.3s ease;
 }
@@ -378,7 +396,7 @@ body.light-mode .profile-card {
 .content-section h2 {
   font-size: 2.8rem;
   margin-bottom: 2.5rem;
-  color: #fca311;
+  color: #ff69b4;
   position: relative;
   display: inline-block;
 }
@@ -391,7 +409,7 @@ body.light-mode .profile-card {
   transform: translateX(-50%);
   width: 60%;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #fca311, transparent);
+  background: linear-gradient(90deg, transparent, #ff69b4, transparent);
 }
 
 .content-section p {
@@ -405,7 +423,7 @@ body.light-mode .profile-card {
 }
 
 .highlight-box {
-  background: linear-gradient(45deg, rgba(252, 163, 17, 0.1), rgba(252, 163, 17, 0.05));
+  background: linear-gradient(45deg, rgba(255, 105, 180, 0.1), rgba(255, 105, 180, 0.05));
   border-left: none;
   border-radius: 15px;
   padding: 2.5rem;
@@ -422,27 +440,27 @@ body.light-mode .profile-card {
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #fca311, transparent);
+  background: linear-gradient(90deg, transparent, #ff69b4, transparent);
 }
 
 .highlight-box p {
   font-size: 1.3rem;
   font-style: italic;
   margin-bottom: 0;
-  color: #fca311;
+  color: #ff69b4;
 }
 
 .accent-line {
   width: 100px;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #fca311, transparent);
+  background: linear-gradient(90deg, transparent, #ff69b4, transparent);
   margin: 2rem auto;
 }
 
 .accent-circle {
   width: 10px;
   height: 10px;
-  background: #fca311;
+  background: #ff69b4;
   border-radius: 50%;
   margin: 1rem auto;
   animation: pulse 2s infinite;
@@ -464,11 +482,13 @@ body.light-mode .profile-card {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.5s ease;
 }
 
-.parallax-1 {
-  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
-              url('https://images.unsplash.com/photo-1575543483595-241d7d242b39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+.parallax-section .hero-content {
+  transform: scale(0.95);
+  opacity: 0;
+  transition: all 0.8s ease;
 }
 
 .parallax-2 {
@@ -478,7 +498,7 @@ body.light-mode .profile-card {
 
 .parallax-section .hero-content h2 {
   font-size: 1.8rem;
-  color: #fca311;
+  color: #ff69b4;
   margin-top: 1rem;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -498,7 +518,7 @@ body.light-mode .profile-card {
 
 .stat-number {
   font-size: 3rem;
-  color: #fca311;
+  color: #ff69b4;
   margin-bottom: 0.5rem;
 }
 
@@ -515,23 +535,23 @@ body.light-mode .profile-card {
 }
 
 .location-badge {
-  background: rgba(252, 163, 17, 0.2);
+  background: rgba(255, 105, 180, 0.2);
   border-radius: 50px;
   padding: 0.5rem 1.5rem;
   display: inline-flex;
   align-items: center;
   margin: 1rem 0;
-  border: 1px solid rgba(252, 163, 17, 0.3);
+  border: 1px solid rgba(255, 105, 180, 0.3);
 }
 
 .location-badge i {
   margin-right: 0.5rem;
-  color: #fca311;
+  color: #ff69b4;
 }
 
 .korean-text {
   font-size: 1.5rem;
-  color: #fca311;
+  color: #ff69b4;
   margin: 1rem 0;
 }
 
@@ -543,19 +563,21 @@ body.light-mode .profile-card {
 }
 
 .profile-card {
-  background: rgba(252, 163, 17, 0.1);
+  background: rgba(255, 105, 180, 0.1);
   border-radius: 8px;
   padding: 2rem;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(252, 163, 17, 0.2);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 105, 180, 0.2);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px 0 rgba(255, 105, 180, 0.1);
+  transform-style: preserve-3d;
 }
 
 .profile-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  background: rgba(252, 163, 17, 0.15);
+  transform: translateY(-15px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(255, 105, 180, 0.2);
 }
 
 .profile-card::before {
@@ -565,7 +587,7 @@ body.light-mode .profile-card {
   left: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(90deg, #fca311, #ff4e00);
+  background: linear-gradient(90deg, #ff69b4, #ff1493);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -576,13 +598,13 @@ body.light-mode .profile-card {
 }
 
 .profile-card h3 {
-  color: #fca311;
+  color: #ff69b4;
   margin-bottom: 1.5rem;
 }
 
 .profile-details li {
   padding: 0.8rem;
-  border-bottom: 1px solid rgba(252, 163, 17, 0.2);
+  border-bottom: 1px solid rgba(255, 105, 180, 0.2);
   transition: all 0.3s ease;
   display: flex;
   justify-content: space-between;
@@ -595,12 +617,12 @@ body.light-mode .profile-card {
 }
 
 .profile-details li:hover {
-  background: rgba(252, 163, 17, 0.1);
+  background: rgba(255, 105, 180, 0.1);
   padding-left: 1.2rem;
 }
 
 .profile-details span {
-  color: #fca311;
+  color: #ff69b4;
 }
 
 .discord-container {
@@ -626,16 +648,23 @@ body.light-mode .profile-card {
 .stat-circle {
   width: 150px;
   height: 150px;
-  border: 4px solid #fca311;
+  border: 4px solid #ff69b4;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
   position: relative;
   cursor: pointer;
+  background: rgba(255, 105, 180, 0.05);
+  transform-style: preserve-3d;
+}
+
+.stat-circle:hover {
+  transform: translateY(-10px) rotateY(10deg);
+  box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
 }
 
 .stat-circle::after {
@@ -647,7 +676,7 @@ body.light-mode .profile-card {
   bottom: -4px;
   border-radius: 50%;
   border: 4px solid transparent;
-  border-top-color: #fca311;
+  border-top-color: #ff69b4;
   animation: rotate 2s linear infinite;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -663,7 +692,7 @@ body.light-mode .profile-card {
 
 .stat-value {
   font-size: 2.2rem;
-  color: #fca311;
+  color: #ff69b4;
   font-weight: bold;
   transition: all 0.3s ease;
 }
@@ -685,7 +714,7 @@ body.light-mode .profile-card {
 .license-list li {
   padding: 1rem;
   margin-bottom: 1rem;
-  background: rgba(252, 163, 17, 0.1);
+  background: rgba(255, 105, 180, 0.1);
   border-radius: 4px;
   transition: all 0.3s ease;
   position: relative;
@@ -702,15 +731,15 @@ body.light-mode .profile-card {
 }
 
 .license-list li:hover {
-  background: rgba(252, 163, 17, 0.2);
+  background: rgba(255, 105, 180, 0.2);
   transform: translateX(10px);
 }
 
 .footer {
-  background-color: #14181f;
+  background-color: #000000;
   padding: 3rem 2rem;
   margin-top: 4rem;
-  border-top: 1px solid rgba(252, 163, 17, 0.2);
+  border-top: 1px solid rgba(255, 105, 180, 0.2);
 }
 
 .footer-container {
@@ -722,7 +751,7 @@ body.light-mode .profile-card {
 }
 
 .footer-section h3 {
-  color: #fca311;
+  color: #ff69b4;
   margin-bottom: 1.5rem;
   font-size: 1.2rem;
 }
@@ -752,7 +781,7 @@ body.light-mode .profile-card {
 }
 
 .footer-links a:hover {
-  color: #fca311;
+  color: #ff69b4;
   opacity: 1;
   transform: translateX(5px);
 }
@@ -764,33 +793,42 @@ body.light-mode .profile-card {
 }
 
 .social-links a {
-  color: #fca311;
+  color: #ff69b4;
   font-size: 1.5rem;
   transition: all 0.3s ease;
 }
 
 .social-links a:hover {
   transform: translateY(-3px);
-  color: #ff4e00;
+  color: #ff1493;
 }
 
 .footer-bottom {
   text-align: center;
   padding-top: 2rem;
   margin-top: 2rem;
-  border-top: 1px solid rgba(252, 163, 17, 0.2);
+  border-top: 1px solid rgba(255, 105, 180, 0.2);
   color: #ffffff;
   opacity: 0.8;
   font-size: 0.9rem;
 }
 
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 </style>
 </head>
 <body>
 
 <nav class="nav-bar">
   <div class="nav-container">
-    <a href="/" class="nav-logo">Haneul Racing</a>
     <div class="nav-controls">
       <button id="themeToggle" class="theme-toggle">
         <i class="fas fa-moon"></i>
@@ -803,7 +841,7 @@ body.light-mode .profile-card {
       <li><a href="#about">About</a></li>
       <li><a href="#achievements">Achievements</a></li>
       <li><a href="#racing-profile">Profile</a></li>
-      <li><a href="#simracing" class="esports">Sim Racing</a></li>
+      <li><a href="#simracing" class="esports">Virtual Racing</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
@@ -835,24 +873,11 @@ body.light-mode .profile-card {
   </div>
 </section>
 
-<div class="parallax-section parallax-1">
-  <div class="hero-content fade-in">
-    <h1>Racing Excellence</h1>
-    <h2>Precision & Performance</h2>
-  </div>
-</div>
-
 <section class="content-section" id="achievements">
   <div class="content-container fade-in">
     <div class="accent-circle"></div>
     <h2>Racing Achievements</h2>
     <div class="accent-line"></div>
-    
-    <p>Through years of dedication in motorsports, I've grown significantly as a driver. Each race weekend has shaped me into the competitor I am today.</p>
-    
-    <div class="highlight-box">
-      <p>Through every racing event, I've focused on continuously improving my race craft and pushing my limits on track.</p>
-    </div>
     
     <div class="stats-grid">
       <div class="stat-item">
@@ -868,70 +893,6 @@ body.light-mode .profile-card {
         <div class="stat-label">Best Finish</div>
       </div>
     </div>
-    
-    <div class="accent-line"></div>
-  </div>
-</section>
-
-<div class="parallax-section parallax-2">
-  <div class="hero-content fade-in">
-    <h1>Pushing Limits</h1>
-    <h2>Every Race, Every Lap</h2>
-  </div>
-</div>
-
-<section class="content-section">
-  <div class="content-container fade-in">
-    <div class="accent-circle"></div>
-    <h2>Racing Philosophy</h2>
-    <div class="accent-line"></div>
-    
-    <p>My approach to racing combines aggressive driving with strategic thinking. Every race is an opportunity to showcase both speed and racecraft while respecting fellow competitors.</p>
-    
-    <p>I believe in continuous improvement, spending countless hours analyzing data, studying track conditions, and refining my technique to find those precious tenths of a second.</p>
-    
-    <div class="highlight-box">
-      <p>Whether it's a local club race or an league event, I bring the same level of preparation and professionalism to every competition.</p>
-    </div>
-    
-    <p>Looking ahead, my goal is to continue developing as a driver while pushing my limits on track. Through dedication and hard work, I aim to make my mark in the racing world.</p>
-    
-    <div class="accent-line"></div>
-  </div>
-</section>
-
-<section class="content-section">
-  <div class="content-container fade-in">
-    <div class="accent-circle"></div>
-    <h2>Korean Heritage</h2>
-    <div class="accent-line"></div>
-    
-    <svg class="korean-flag" xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="-72 -48 144 96">
-      <path fill="#fff" d="M-72-48v96H72v-96z"/>
-      <g stroke="#000" stroke-width="4">
-        <path transform="rotate(33.69006752598)" d="M-50-12v24m6 0v-24m6 0v24m76 0V1m0-2v-11m6 0v11m0 2v11m6 0V1m0-2v-11"/>
-        <path transform="rotate(-33.69006752598)" d="M-50-12v24m6 0V1m0-2v-11m6 0v24m76 0V1m0-2v-11m6 0v24m6 0V1m0-2v-11"/>
-      </g>
-      <g transform="rotate(33.69006752598)">
-        <path fill="#cd2e3a" d="M12 0a18 18 0 11-36 0 24 24 0 1148 0"/>
-        <path fill="#0047a0" d="M0 0a12 12 0 1124 0 24 24 0 11-48 0 12 12 0 1024 0"/>
-      </g>
-    </svg>
-
-    <div class="location-badge">
-      <i class="fas fa-map-marker-alt"></i>
-      Seoul, South Korea
-    </div>
-    
-    <p class="korean-text">오하늘 레이싱</p>
-    
-    <p>As a Korean racing driver, I take pride in representing my heritage on the track. Based in Amsterdam, I split my time between local competitions and international events, bringing Korean racing spirit to every circuit I compete on.</p>
-    
-    <div class="highlight-box">
-      <p>My racing style combines the precision and dedication ingrained in Korean culture with an aggressive, yet calculated approach to overtaking and race craft.</p>
-    </div>
-    
-    <p>Being one of the few Korean drivers in the motorsport, I hope to inspire more young talents from Korea to pursue their racing dreams. Through my performances and achievements, I aim to show that Korean drivers can compete at the highest levels of motorsport.</p>
     
     <div class="accent-line"></div>
   </div>
@@ -966,7 +927,7 @@ body.light-mode .profile-card {
             <span class="stat-label">Podiums</span>
           </div>
           <div class="stat-circle">
-            <span class="stat-value">3rd</span>
+            <span class="stat-value">4th</span>
             <span class="stat-label">Best Finish</span>
           </div>
         </div>
@@ -991,7 +952,7 @@ body.light-mode .profile-card {
     <h2>Sim Racing Career</h2>
     <div class="accent-line"></div>
     
-    <p>Beyond real-world racing, I maintain a strong presence in the competitive sim racing scene, where I regularly compete in high-level events.</p>
+    <p>Beyond real-world racing, I maintain a strong presence in the competitive sim racing scene, where I regularly compete in high-level events and championships.</p>
     
     <div class="highlight-box">
       <p>Sim racing provides an invaluable platform for maintaining racing sharpness and developing race craft through countless hours of virtual competition.</p>
@@ -1042,7 +1003,14 @@ body.light-mode .profile-card {
     <p>Connect with us on Discord to join our racing community, share experiences, and stay updated on upcoming events.</p>
     
     <div class="discord-container">
-      <iframe src="https://discord.com/widget?id=1289900616419774534&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+      <iframe 
+        src="https://discord.com/widget?id=1289900616419774534&theme=dark" 
+        width="350" 
+        height="500" 
+        allowtransparency="true" 
+        frameborder="0" 
+        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+      </iframe>
     </div>
 
     <div class="accent-line"></div>
@@ -1051,7 +1019,6 @@ body.light-mode .profile-card {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Scroll indicator click handler
     document.querySelector('.scroll-indicator').addEventListener('click', () => {
         const aboutSection = document.querySelector('#about');
         const navHeight = document.querySelector('.nav-bar').offsetHeight;
@@ -1063,7 +1030,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Smooth scrolling navigation
     document.querySelectorAll('.nav-links a').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -1079,7 +1045,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     behavior: 'smooth'
                 });
                 
-                // Update active state
                 document.querySelectorAll('.nav-links a').forEach(link => {
                     link.classList.remove('active');
                 });
@@ -1088,7 +1053,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Update active section on scroll
     window.addEventListener('scroll', () => {
         const sections = document.querySelectorAll('section[id]');
         const navHeight = document.querySelector('.nav-bar').offsetHeight;
@@ -1109,14 +1073,30 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    // Navbar scroll effect
+    
+    const sections = document.querySelectorAll('section[id]');
+    
+    window.addEventListener('scroll', () => {
+        const scrollY = window.pageYOffset;
+        
+        sections.forEach(section => {
+            const sectionHeight = section.offsetHeight;
+            const sectionTop = section.offsetTop - 100;
+            const sectionId = section.getAttribute('id');
+            
+            if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                document.querySelector('.nav-links a[href*=' + sectionId + ']')?.classList.add('active');
+            } else {
+                document.querySelector('.nav-links a[href*=' + sectionId + ']')?.classList.remove('active');
+            }
+        });
+    });
     const navbar = document.querySelector('.nav-bar');
     let lastScroll = 0;
     
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
         
-        // Add/remove scrolled class
         if (currentScroll > 50) {
             navbar.classList.add('scrolled');
         } else {
@@ -1126,7 +1106,6 @@ document.addEventListener('DOMContentLoaded', function() {
         lastScroll = currentScroll;
     });
     
-    // Set active nav item based on current page
     const currentLocation = window.location.pathname;
     const navLinks = document.querySelectorAll('.nav-links a');
     
@@ -1136,7 +1115,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Animate stat numbers
     const statValues = document.querySelectorAll('.stat-value');
     
     statValues.forEach(stat => {
@@ -1200,7 +1178,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Theme toggling
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
     
@@ -1211,18 +1188,15 @@ document.addEventListener('DOMContentLoaded', function() {
         icon.classList.toggle('fa-moon');
         icon.classList.toggle('fa-sun');
         
-        // Save preference
         localStorage.setItem('theme', body.classList.contains('light-mode') ? 'light' : 'dark');
     });
     
-    // Check saved theme preference
     if (localStorage.getItem('theme') === 'light') {
         body.classList.add('light-mode');
         themeToggle.classList.add('light-mode');
         themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
     }
     
-    // Language toggling
     const languageToggle = document.getElementById('languageToggle');
     const translations = {
         en: {
@@ -1251,7 +1225,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     function updateLanguage() {
-        // Update navigation links
         document.querySelectorAll('.nav-links a').forEach(link => {
             const key = link.getAttribute('href').replace('#', '');
             if (translations[currentLang][key]) {
@@ -1259,7 +1232,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Update other text elements
         if (currentLang === 'kr') {
             document.querySelector('.hero-content h2').textContent = '레이싱 드라이버';
         } else {
@@ -1267,7 +1239,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Initialize language
     if (localStorage.getItem('lang') === 'kr') {
         currentLang = 'kr';
         languageToggle.querySelector('.current-lang').textContent = 'KR';
@@ -1301,9 +1272,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     <div class="footer-section">
       <h3>Contact Info</h3>
-      <p><i class="fas fa-envelope"></i> admin@haneulracing.com</p>
+      <p><i class="fas fa-envelope"></i> contact@haneulracing.com</p>
       <p><i class="fas fa-map-marker-alt"></i> Amsterdam, Netherlands</p>
-      <p>Join the Korean Car Community Discord for updates and engagement!</p>
+      <p>Join our Discord community for updates and engagement!</p>
     </div>
   </div>
   
