@@ -4,8 +4,6 @@
 
 ## Overview
 
-The **HaneulRacing** website is a dynamic, responsive site that showcases the career, achievements, and community of a semi-professional Porsche Cup racing driver. It features sections highlighting racing accomplishments, a profile, a sim racing career, and an embedded Discord widget for community engagement.
-
 The site combines vibrant visuals and intuitive navigation to provide visitors with an engaging experience.
 
 ## Features
