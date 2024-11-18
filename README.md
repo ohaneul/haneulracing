@@ -44,6 +44,7 @@ The site combines vibrant visuals and intuitive navigation to provide visitors w
    - Theme preference (light/dark) and language setting (EN/KR) are saved using `localStorage`.
 
 ## Setup and Deployment
+(Please provide credit)
 
 1. Clone the repository:
    ```bash
