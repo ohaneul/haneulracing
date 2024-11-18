@@ -52,15 +52,6 @@ The site combines vibrant visuals and intuitive navigation to provide visitors w
    ```
 2. Host the `index.html` on any static web server or platform (e.g., GitHub Pages, Netlify, Vercel).
 
-## Folder Structure
-
-```
-/
-├── index.html    # Main HTML file
-├── logo.png      # Favicon and site logo
-├── README.md     # Documentation
-```
-
 ## License
 
 This project is open-source and available under the [MIT License](LICENSE).
