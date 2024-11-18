@@ -49,7 +49,7 @@ The site combines vibrant visuals and intuitive navigation to provide visitors w
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/haneulracing.git
+   git clone https://github.com/ohaneul/haneulracing.git
    ```
 2. Host the `index.html` on any static web server or platform (e.g., GitHub Pages, Netlify, Vercel).
 
