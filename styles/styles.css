@@ -902,3 +902,116 @@
     }
   }
   
+  /* Mobile Navigation Styles */
+  .mobile-nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1002;
+  }
+  
+  /* Media Queries for Responsive Design */
+  @media screen and (max-width: 768px) {
+    .mobile-nav-toggle {
+      display: block;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+    }
+  
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 80%;
+      height: 100vh;
+      background: rgba(15, 18, 24, 0.95);
+      transition: left 0.3s ease;
+      cursor: default;
+      transform: none !important;
+    }
+  
+    .nav-bar.active {
+      left: 0;
+    }
+  
+    .nav-container {
+      flex-direction: column;
+      padding: 2rem;
+      height: 100%;
+    }
+  
+    .nav-links {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 2rem;
+    }
+  
+    .nav-links a {
+      font-size: 1.2rem;
+      padding: 1rem 0;
+      width: 100%;
+    }
+  
+    .nav-controls {
+      margin-top: 2rem;
+    }
+  
+    /* Hero Section Adjustments */
+    .hero-content h1 {
+      font-size: 3rem;
+    }
+  
+    .hero-content h2 {
+      font-size: 1.5rem;
+    }
+  
+    /* Content Section Adjustments */
+    .content-section {
+      padding: 3rem 1rem;
+    }
+  
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  
+    .profile-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    /* Footer Adjustments */
+    .footer-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+  
+    .social-links {
+      justify-content: center;
+    }
+  
+    /* Disable dragging on mobile */
+    .nav-bar {
+      user-select: auto;
+    }
+  }
+  
+  /* Additional adjustments for smaller screens */
+  @media screen and (max-width: 480px) {
+    .hero-content h1 {
+      font-size: 2.5rem;
+    }
+  
+    .content-section h2 {
+      font-size: 2rem;
+    }
+  
+    .stat-circle {
+      width: 120px;
+      height: 120px;
+    }
+  }
+  

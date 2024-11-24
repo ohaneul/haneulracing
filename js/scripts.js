@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function dragStart(e) {
+        if (window.innerWidth <= 768) return; // Disable dragging on mobile
+        
         initialX = e.type === 'touchstart' ? e.touches[0].clientX - xOffset : e.clientX - xOffset;
         initialY = e.type === 'touchstart' ? e.touches[0].clientY - yOffset : e.clientY - yOffset;
 
@@ -331,4 +333,39 @@ document.addEventListener('DOMContentLoaded', function() {
             section.style.setProperty('--y', `${y}%`);
         });
     });
+
+    // Mobile Navigation Handler
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const navBar = document.querySelector('.nav-bar');
+
+    mobileNavToggle.addEventListener('click', () => {
+        navBar.classList.toggle('active');
+        const icon = mobileNavToggle.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+    });
+
+    // Close mobile nav when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navBar.contains(e.target) && !mobileNavToggle.contains(e.target)) {
+            navBar.classList.remove('active');
+            mobileNavToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+        }
+    });
+
+    // Close mobile nav when clicking a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                navBar.classList.remove('active');
+                mobileNavToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+            }
+        });
+    });
+
+    // Disable dragging on mobile
+    if (window.innerWidth <= 768) {
+        navbar.removeEventListener('mousedown', dragStart);
+        navbar.removeEventListener('touchstart', dragStart);
+    }
 });
