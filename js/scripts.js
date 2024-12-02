@@ -1,371 +1,200 @@
 document.addEventListener('DOMContentLoaded', function() {
+    let lastScrollTop = 0;
     const navbar = document.querySelector('.nav-bar');
-    const navToggle = document.querySelector('.nav-toggle');
-    let isDragging = false;
-    let currentX;
-    let currentY;
-    let initialX;
-    let initialY;
-    let xOffset = 0;
-    let yOffset = 0;
 
-    const snapIndicators = {
-        left: document.createElement('div'),
-        right: document.createElement('div')
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (currentScroll > lastScrollTop && currentScroll > 100) {
+            navbar.classList.add('hidden');
+        } else {
+            navbar.classList.remove('hidden');
+        }
+        
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    });
+
+    // Language translations
+    const translations = {
+        en: {
+            nav: {
+                about: 'About',
+                achievements: 'Achievements',
+                profile: 'Profile',
+                simracing: 'Sim Racing',
+                contact: 'Contact'
+            },
+            hero: {
+                title: 'FEMALE RACING DRIVER IN THE',
+                subtitle: 'PORSCHE CUP SERIES',
+                description: 'Follow my journey as I compete in the Porsche Cup Series, pushing the limits of performance and representing the next generation of motorsport talent.'
+            },
+            about: {
+                title: 'Racing Career',
+                description: 'As a semi-professional racing driver in the Porsche Cup series, I compete in the highly demanding 992 GT3 Cup car, which requires precision driving skills and technical expertise.',
+                highlight: 'Every race is an opportunity to showcase both speed and racecraft while pushing the limits of performance.'
+            },
+            // Add more sections as needed
+        },
+        kr: {
+            nav: {
+                about: '소개',
+                achievements: '성과',
+                profile: '프로필',
+                simracing: '심 레이싱',
+                contact: '연락처'
+            },
+            hero: {
+                title: '포르쉐 컵 시리즈',
+                subtitle: '여성 레이싱 드라이버',
+                description: '포르쉐 컵 시리즈에서 경쟁하며 성능의 한계를 넘어서고 차세대 모터스포츠 인재를 대표하는 저의 여정을 함께해주세요.'
+            },
+            about: {
+                title: '레이싱 경력',
+                description: '포르쉐 컵 시리즈의 세미 프로 레이싱 드라이버로서, 정밀한 드라이빙 기술과 기술적 전문성이 요구되는 992 GT3 컵카를 운전하고 있습니다.',
+                highlight: '모든 레이스는 속도와 레이스크래프트를 선보이며 성능의 한계에 도전하는 기회입니다.'
+            },
+            // Add more sections as needed
+        }
     };
 
-    Object.values(snapIndicators).forEach(indicator => {
-        indicator.className = 'snap-indicator';
-        document.body.appendChild(indicator);
-    });
+    // Function to update content based on language
+    function updateContent(lang) {
+        // Update navigation
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            const key = link.getAttribute('href').replace('#', '');
+            if (translations[lang].nav[key]) {
+                link.textContent = translations[lang].nav[key];
+            }
+        });
 
-    function dragStart(e) {
-        if (window.innerWidth <= 768) return; // Disable dragging on mobile
-        
-        initialX = e.type === 'touchstart' ? e.touches[0].clientX - xOffset : e.clientX - xOffset;
-        initialY = e.type === 'touchstart' ? e.touches[0].clientY - yOffset : e.clientY - yOffset;
-
-        if (e.target === navbar) {
-            isDragging = true;
+        // Update hero section
+        const heroTitle = document.querySelector('.hero-content h2');
+        const heroDesc = document.querySelector('.hero-content p');
+        if (heroTitle && heroDesc) {
+            heroTitle.innerHTML = `${translations[lang].hero.title}<br>${translations[lang].hero.subtitle}`;
+            heroDesc.innerHTML = translations[lang].hero.description;
         }
+
+        // Update about section
+        const aboutTitle = document.querySelector('#about h2');
+        const aboutDesc = document.querySelector('#about p');
+        const aboutHighlight = document.querySelector('#about .highlight-box p');
+        if (aboutTitle && aboutDesc && aboutHighlight) {
+            aboutTitle.textContent = translations[lang].about.title;
+            aboutDesc.textContent = translations[lang].about.description;
+            aboutHighlight.textContent = translations[lang].about.highlight;
+        }
+
+        // Update HTML lang attribute
+        document.documentElement.lang = lang;
     }
 
-    function drag(e) {
-        if (isDragging) {
-            e.preventDefault();
-            
-            currentX = e.type === 'touchmove' ? e.touches[0].clientX - initialX : e.clientX - initialX;
-            currentY = e.type === 'touchmove' ? e.touches[0].clientY - initialY : e.clientY - initialY;
-
-            xOffset = currentX;
-            yOffset = currentY;
-
-            const snapThreshold = 50;
-            const screenWidth = window.innerWidth;
-            
-            if (currentX < snapThreshold) {
-                snapIndicators.left.style.opacity = '0.5';
-                snapIndicators.left.style.left = '20px';
-                snapIndicators.left.style.top = `${currentY + 20}px`;
-                snapIndicators.left.style.height = `${navbar.offsetHeight}px`;
-            } else if (currentX > screenWidth - navbar.offsetWidth - snapThreshold) {
-                snapIndicators.right.style.opacity = '0.5';
-                snapIndicators.right.style.right = '20px';
-                snapIndicators.right.style.top = `${currentY + 20}px`;
-                snapIndicators.right.style.height = `${navbar.offsetHeight}px`;
+    // Language toggle functionality
+    const languageToggle = document.getElementById('languageToggle');
+    if (languageToggle) {
+        const currentLang = languageToggle.querySelector('.current-lang');
+        
+        languageToggle.addEventListener('click', function() {
+            if (currentLang.textContent === 'EN') {
+                currentLang.textContent = 'KR';
+                updateContent('kr');
             } else {
-                Object.values(snapIndicators).forEach(indicator => {
-                    indicator.style.opacity = '0';
-                });
+                currentLang.textContent = 'EN';
+                updateContent('en');
             }
-
-            setTranslate(currentX, currentY, navbar);
-        }
-    }
-
-    function dragEnd(e) {
-        if (!isDragging) return;
-
-        const snapThreshold = 50;
-        const screenWidth = window.innerWidth;
-        
-        if (currentX < snapThreshold) {
-            currentX = 20;
-        } else if (currentX > screenWidth - navbar.offsetWidth - snapThreshold) {
-            currentX = screenWidth - navbar.offsetWidth - 20;
-        }
-
-        setTranslate(currentX, currentY, navbar);
-        
-        Object.values(snapIndicators).forEach(indicator => {
-            indicator.style.opacity = '0';
-        });
-
-        initialX = currentX;
-        initialY = currentY;
-        isDragging = false;
-
-        // Toggle navbar visibility
-        navToggle.addEventListener('click', () => {
-            navbar.classList.toggle('hidden');
-            navToggle.classList.toggle('visible');
         });
     }
 
-    function setTranslate(xPos, yPos, el) {
-        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-    }
+    // Section visibility observer
+    const observerOptions = {
+        threshold: 0.2
+    };
 
-    navbar.addEventListener('mousedown', dragStart);
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', dragEnd);
-
-    navbar.addEventListener('touchstart', dragStart);
-    document.addEventListener('touchmove', drag);
-    document.addEventListener('touchend', dragEnd);
-
-    // Scroll indicator click handler
-    document.querySelector('.scroll-indicator').addEventListener('click', () => {
-        const aboutSection = document.querySelector('#about');
-        const navHeight = document.querySelector('.nav-bar').offsetHeight;
-        const targetPosition = aboutSection.offsetTop - navHeight;
-        
-        window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-        });
-    });
-
-    // Smooth scrolling navigation
-    document.querySelectorAll('.nav-links a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                const navHeight = document.querySelector('.nav-bar').offsetHeight;
-                const targetPosition = targetSection.offsetTop - navHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-                
-                // Update active state
-                document.querySelectorAll('.nav-links a').forEach(link => {
-                    link.classList.remove('active');
-                });
-                this.classList.add('active');
-            }
-        });
-    });
-
-    // Update active section on scroll
-    window.addEventListener('scroll', () => {
-        const sections = document.querySelectorAll('section[id]');
-        const navHeight = document.querySelector('.nav-bar').offsetHeight;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - navHeight - 100;
-            const sectionBottom = sectionTop + section.offsetHeight;
-            const scrollPosition = window.scrollY;
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                const correspondingLink = document.querySelector(`.nav-links a[href="#${section.id}"]`);
-                if (correspondingLink) {
-                    document.querySelectorAll('.nav-links a').forEach(link => {
-                        link.classList.remove('active');
-                    });
-                    correspondingLink.classList.add('active');
-                }
-            }
-        });
-    });
-    
-    // Navbar scroll effect
-    const lastScroll = 0;
-    
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        
-        // Add/remove scrolled class
-        if (currentScroll > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-        
-        // Hide/show navbar based on scroll direction
-        if (currentScroll > lastScroll && currentScroll > 500) {
-            navbar.style.transform = 'translateY(-100%)';
-        } else {
-            navbar.style.transform = 'translateY(0)';
-        }
-    });
-    
-    // Set active nav item based on current page
-    const currentLocation = window.location.pathname;
-    const navLinks = document.querySelectorAll('.nav-links a');
-    
-    navLinks.forEach(link => {
-        if (link.getAttribute('href') === currentLocation) {
-            link.classList.add('active');
-        }
-    });
-
-    // Animate stat numbers
-    const statValues = document.querySelectorAll('.stat-value');
-    
-    statValues.forEach(stat => {
-        const finalValue = stat.innerText;
-        let startValue = 0;
-        
-        if (!isNaN(parseInt(finalValue))) {
-            const duration = 2000;
-            const step = parseInt(finalValue) / (duration / 16);
-            
-            const counter = setInterval(() => {
-                startValue += step;
-                if (startValue >= parseInt(finalValue)) {
-                    stat.innerText = finalValue;
-                    clearInterval(counter);
-                } else {
-                    stat.innerText = Math.floor(startValue);
-                }
-            }, 16);
-        }
-    });
-
-    const fadeElements = document.querySelectorAll('.fade-in');
-    
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                
-                // Add custom animation based on element type
-                if (entry.target.classList.contains('stat-circle')) {
-                    entry.target.style.animation = 'floatAnimation 4s ease-in-out infinite';
-                }
             }
         });
-    }, {
-        threshold: 0.1
-    });
-    
-    document.querySelectorAll('.content-container').forEach(element => {
-        observer.observe(element);
-    });
-    
-    let heroSection = document.querySelector('.hero');
-    
-    window.addEventListener('scroll', () => {
-        let scrollPosition = window.scrollY;
-        let opacity = 1 - (scrollPosition / (window.innerHeight * 0.5));
-        
-        if (opacity >= 0) {
-            heroSection.style.opacity = opacity;
-        }
-    });
-    
-    // Theme toggling
-    const themeToggle = document.getElementById('themeToggle');
-    const body = document.body;
-    
-    themeToggle.addEventListener('click', () => {
-        body.classList.toggle('light-mode');
-        themeToggle.classList.toggle('light-mode');
-        const icon = themeToggle.querySelector('i');
-        icon.classList.toggle('fa-moon');
-        icon.classList.toggle('fa-sun');
-        
-        // Save preference
-        localStorage.setItem('theme', body.classList.contains('light-mode') ? 'light' : 'dark');
-    });
-    
-    // Check saved theme preference
-    if (localStorage.getItem('theme') === 'light') {
-        body.classList.add('light-mode');
-        themeToggle.classList.add('light-mode');
-        themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
-    }
-    
-    // Language toggling
-    const languageToggle = document.getElementById('languageToggle');
-    const translations = {
-        en: {
-            about: "About",
-            achievements: "Achievements",
-            profile: "Profile",
-            simracing: "Sim Racing",
-            contact: "Contact"
-        },
-        kr: {
-            about: "소개",
-            achievements: "성과",
-            profile: "프로필",
-            simracing: "심레이싱",
-            contact: "연락처"
-        }
-    };
-    
-    let currentLang = localStorage.getItem('lang') || 'en';
-    
-    languageToggle.addEventListener('click', () => {
-        currentLang = currentLang === 'en' ? 'kr' : 'en';
-        languageToggle.querySelector('.current-lang').textContent = currentLang.toUpperCase();
-        updateLanguage();
-        localStorage.setItem('lang', currentLang);
-    });
-    
-    function updateLanguage() {
-        // Update navigation links
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            const key = link.getAttribute('href').replace('#', '');
-            if (translations[currentLang][key]) {
-                link.textContent = translations[currentLang][key];
-            }
-        });
-        
-        // Update other text elements
-        if (currentLang === 'kr') {
-            document.querySelector('.hero-content h2').textContent = '레이싱 드라이버';
-        } else {
-            document.querySelector('.hero-content h2').textContent = 'Racing Driver';
-        }
-    }
-    
-    // Initialize language
-    if (localStorage.getItem('lang') === 'kr') {
-        currentLang = 'kr';
-        languageToggle.querySelector('.current-lang').textContent = 'KR';
-        updateLanguage();
-    }
+    }, observerOptions);
 
-    // Mouse move effect for content sections
     document.querySelectorAll('.content-section').forEach(section => {
-        section.addEventListener('mousemove', (e) => {
-            const rect = section.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            section.style.setProperty('--x', `${x}%`);
-            section.style.setProperty('--y', `${y}%`);
+        observer.observe(section);
+    });
+
+    // Smooth image loading
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('load', () => {
+            img.classList.add('loaded');
         });
     });
 
-    // Mobile Navigation Handler
-    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-    const navBar = document.querySelector('.nav-bar');
-
-    mobileNavToggle.addEventListener('click', () => {
-        navBar.classList.toggle('active');
-        const icon = mobileNavToggle.querySelector('i');
-        icon.classList.toggle('fa-bars');
-        icon.classList.toggle('fa-times');
-    });
-
-    // Close mobile nav when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!navBar.contains(e.target) && !mobileNavToggle.contains(e.target)) {
-            navBar.classList.remove('active');
-            mobileNavToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const heroContent = document.querySelector('.hero-content');
+        const scrollArrow = document.querySelector('.scroll-arrow');
+        
+        // Parallax effect for hero content
+        heroContent.style.transform = `translateY(${scrolled * 0.4}px)`;
+        heroContent.style.opacity = 1 - (scrolled * 0.003);
+        
+        // Fade out scroll arrow
+        if (scrollArrow) {
+            scrollArrow.style.opacity = 1 - (scrolled * 0.01);
         }
     });
 
-    // Close mobile nav when clicking a link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-                navBar.classList.remove('active');
-                mobileNavToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+    function splitTextAnimation() {
+        const headings = document.querySelectorAll('.animate-text');
+        
+        headings.forEach(heading => {
+            const text = heading.textContent;
+            heading.textContent = '';
+            
+            [...text].forEach((char, i) => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.style.animationDelay = `${i * 0.05}s`;
+                heading.appendChild(span);
+            });
+        });
+    }
+
+    // Add to your existing IntersectionObserver
+    const textObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                splitTextAnimation();
+                textObserver.unobserve(entry.target);
             }
         });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.animate-text').forEach(text => {
+        textObserver.observe(text);
     });
 
-    // Disable dragging on mobile
-    if (window.innerWidth <= 768) {
-        navbar.removeEventListener('mousedown', dragStart);
-        navbar.removeEventListener('touchstart', dragStart);
-    }
+    // Add scroll progress indicator
+    const progressBar = document.querySelector('.scroll-progress-bar');
+
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        
+        if (progressBar) {
+            progressBar.style.width = scrolled + '%';
+        }
+    });
+
+    // Add mouse movement effect
+    document.querySelector('.hero').addEventListener('mousemove', (e) => {
+        const rect = e.target.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        
+        e.target.style.setProperty('--mouse-x', `${x}%`);
+        e.target.style.setProperty('--mouse-y', `${y}%`);
+    });
 });
